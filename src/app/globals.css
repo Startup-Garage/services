@@ -180,16 +180,23 @@
   }
 
   .float-tag > div {
-    animation: tag-float 6s ease-in-out var(--float-delay, 0s) infinite alternate;
+    animation: tag-float var(--float-dur, 7s) ease-in-out var(--float-delay, 0s) infinite;
+    will-change: transform;
   }
 
+  /* A slow looping drift: up and sideways, a slight roll, then back. */
   @keyframes tag-float {
-    from {
-      transform: translateY(-7px);
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
 
-    to {
-      transform: translateY(7px);
+    30% {
+      transform: translate3d(calc(var(--float-dx, 8px) * 0.6), -16px, 0) rotate(1.6deg);
+    }
+
+    65% {
+      transform: translate3d(var(--float-dx, 8px), 9px, 0) rotate(-1.4deg);
     }
   }
 
@@ -291,6 +298,12 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .term-bubble {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-tag > div {
     animation: none;
   }
 }

@@ -6,13 +6,13 @@ const TITLE_LINES = ["Xizmatlar: startapdan", "investitsiya va", "bozorga kirish
 
 // Floating cards around the title (wide screens only): service names, no prices.
 // Position and tilt are decoration; the names come straight from the services data.
-const TAGS: { id: string; className: string; rotate: number; delay: number }[] = [
-  { id: "diagnostic", className: "left-[3%] top-[19%]", rotate: -4, delay: 0 },
-  { id: "fundraising", className: "right-[3%] top-[16%]", rotate: 3, delay: 1.2 },
-  { id: "cfo", className: "left-[2%] top-[46%]", rotate: 3, delay: 2.1 },
-  { id: "a9r", className: "right-[4%] top-[45%]", rotate: -3, delay: 0.7 },
-  { id: "scouting", className: "left-[5%] top-[71%]", rotate: -2, delay: 1.7 },
-  { id: "soft-landing", className: "right-[3%] top-[69%]", rotate: 4, delay: 2.6 },
+const TAGS: { id: string; className: string; rotate: number; delay: number; dur: number; dx: number }[] = [
+  { id: "diagnostic", className: "left-[3%] top-[19%]", rotate: -4, delay: 0, dur: 7.5, dx: 10 },
+  { id: "fundraising", className: "right-[3%] top-[16%]", rotate: 3, delay: 1.2, dur: 6.5, dx: -12 },
+  { id: "cfo", className: "left-[2%] top-[46%]", rotate: 3, delay: 2.1, dur: 8, dx: 9 },
+  { id: "a9r", className: "right-[4%] top-[45%]", rotate: -3, delay: 0.7, dur: 7, dx: -10 },
+  { id: "scouting", className: "left-[5%] top-[71%]", rotate: -2, delay: 1.7, dur: 6.8, dx: 12 },
+  { id: "soft-landing", className: "right-[3%] top-[69%]", rotate: 4, delay: 2.6, dur: 7.8, dx: -9 },
 ];
 
 export function ServicesHero() {
@@ -32,7 +32,7 @@ export function ServicesHero() {
           key={t.id}
           aria-hidden="true"
           className={cn("float-tag absolute hidden xl:block", t.className)}
-          style={{ "--tilt": `${t.rotate}deg`, "--float-delay": `${t.delay}s` } as CSSProperties}
+          style={{ "--tilt": `${t.rotate}deg`, "--float-delay": `${-t.delay}s`, "--float-dur": `${t.dur}s`, "--float-dx": `${t.dx}px` } as CSSProperties}
         >
           <div className="rounded-full border border-g-200 bg-white px-5 py-3 text-[15px] font-semibold text-g-700">{t.title}</div>
         </div>
