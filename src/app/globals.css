@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* Startup Garage — brand tokens.
+   Flat design: #5458FF · black · white · gray, rounded shapes, no gradients, no shadows. */
+@theme {
+  --color-brand: #5458ff;
+  --color-brand-hover: #4347f2;
+  --color-brand-soft: #ececff;
+  --color-brand-light: #a9abff;
+
+  --color-black: #0b0b0e;
+  --color-ink: #121216;
+  --color-g-900: #18181d;
+  --color-g-850: #1f1f25;
+  --color-g-800: #26262d;
+  --color-g-700: #3a3b44;
+  --color-g-600: #5e606b;
+  --color-g-500: #8a8c97;
+  --color-g-400: #b3b5be;
+  --color-g-300: #d5d7dd;
+  --color-g-200: #e6e7eb;
+  --color-g-100: #f2f3f5;
+
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.75rem;
+
+  --ease-brand: cubic-bezier(0.22, 0.7, 0.2, 1);
+
+  --animate-rise: rise 0.9s var(--ease-brand) both;
+  --animate-bump: bump 0.4s var(--ease-brand);
+  --animate-blink: blink 0.9s steps(1) infinite;
+  --animate-grow: grow 1s var(--ease-brand) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  @keyframes bump {
+    40% {
+      transform: scale(1.12);
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  html:has(dialog[open]),
+  body:has(#mobile-menu[data-open="true"]) {
+    overflow: hidden;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.03em;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Native select with a chevron */
+  .select-chevron {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235E606B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+  }
+
+  /* Hero title: a brand plate is painted behind each line left to right while the characters
+     blur in one by one on top of it (white on the plate). Delays are set per line/char inline. */
+  .marker {
+    color: #fff;
+    padding: 0.1em 0.32em;
+    margin-block: 0.1em;
+    border-radius: 0.22em;
+    background: linear-gradient(var(--color-brand), var(--color-brand)) no-repeat 0 50% / 0% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    white-space: nowrap;
+    animation: marker-wipe 0.9s var(--ease-brand) var(--marker-delay, 0.3s) forwards;
+  }
+
+  @keyframes marker-wipe {
+    to {
+      background-size: 100% 100%;
+    }
+  }
+
+  .blur-char {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(0.28em);
+    animation: blur-in 0.7s var(--ease-brand) var(--char-delay, 0s) forwards;
+  }
+
+  @keyframes blur-in {
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marker {
+      animation: none;
+      background-size: 100% 100%;
+    }
+
+    .blur-char {
+      animation: none;
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+  }
+
+
+  /* Hero decoration: dotted grid, floating service cards, service marquee. */
+  .hero-dots {
+    background-image: radial-gradient(var(--color-g-300) 1.4px, transparent 1.4px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 20%, transparent 100%);
+  }
+
+  .float-tag {
+    rotate: var(--tilt, 0deg);
+  }
+
+  .float-tag > div {
+    animation: tag-float 6s ease-in-out var(--float-delay, 0s) infinite alternate;
+  }
+
+  @keyframes tag-float {
+    from {
+      transform: translateY(-7px);
+    }
+
+    to {
+      transform: translateY(7px);
+    }
+  }
+
+  .marquee {
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Cards fade in out of a blur once, when they enter the viewport (RevealItem sets data-reveal).
+     Without JS or with reduced motion the attribute is never set and cards are simply visible. */
+  [data-reveal="hidden"] {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(32px);
+  }
+
+  [data-reveal="shown"] {
+    animation: blur-rise 0.9s var(--ease-brand) var(--reveal-delay, 0s) both;
+  }
+
+  @keyframes blur-rise {
+    from {
+      opacity: 0;
+      filter: blur(14px);
+      transform: translateY(32px);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: none;
+    }
+  }
+
+  /* Scroll-driven reveal, CSS only — content stays visible where unsupported */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 45%;
+      }
+    }
+  }
+}
