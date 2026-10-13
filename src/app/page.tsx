@@ -1,3 +1,4 @@
+import { Glossary } from "@/components/Glossary";
 import { RevealItem } from "@/components/RevealItem";
 import { ServicesHero } from "@/components/ServicesHero";
 import { PAID_SERVICES, SERVICE_GROUPS } from "@/content/services";
@@ -43,27 +44,35 @@ export default function ServicesPage() {
                     >
                       <article className="row-span-5 grid grid-rows-subgrid gap-y-0 rounded-4xl bg-white p-[clamp(22px,2.6vw,34px)] ring-1 ring-g-200">
                         <header>
-                          <h3 className="text-[clamp(22px,2.2vw,28px)] font-semibold tracking-[-0.04em]">{s.title}</h3>
-                          <p className="mt-2 text-[16px] text-g-600">{s.tagline}</p>
+                          <h3 className="text-[clamp(22px,2.2vw,28px)] font-semibold tracking-[-0.04em]"><Glossary>{s.title}</Glossary></h3>
+                          <p className="mt-2 text-[16px] text-g-600">
+                            <Glossary>{s.tagline}</Glossary>
+                          </p>
                         </header>
                         <p className="mt-6 flex flex-wrap items-baseline gap-x-2.5">
                           <span className="text-[clamp(28px,3vw,38px)] font-bold tracking-[-0.05em] text-brand">{s.price}</span>
-                          {s.priceNote && <span className="text-[14px] font-medium text-g-500">{s.priceNote}</span>}
+                          {s.priceNote && <span className="text-[14px] font-medium text-g-500">
+                              <Glossary>{s.priceNote}</Glossary>
+                            </span>}
                         </p>
                         <ul className="mt-6 grid content-start gap-2.5">
                           {s.includes.map((item) => (
                             <li key={item} className="flex gap-3 border-t border-g-200 pt-2.5 text-[15px] text-g-700">
                               <span aria-hidden="true" className="mt-[9px] size-1.5 flex-none rounded-full bg-brand" />
-                              {item}
+                              <span>
+                                <Glossary>{item}</Glossary>
+                              </span>
                             </li>
                           ))}
                         </ul>
                         <div className="mt-5 grid content-start gap-3">
-                          {s.note && <p className="text-[13.5px] text-g-500">{s.note}</p>}
+                          {s.note && <p className="text-[13.5px] text-g-500">
+                              <Glossary>{s.note}</Glossary>
+                            </p>}
                           {s.audience && (
                             <p className="text-[14px] text-g-500">
                               <span className="font-semibold text-g-700">Kimlar uchun: </span>
-                              {s.audience}
+                              <Glossary>{s.audience}</Glossary>
                             </p>
                           )}
                         </div>

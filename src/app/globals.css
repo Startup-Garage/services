@@ -240,3 +240,57 @@
     }
   }
 }
+
+/* Jargon terms: dotted underline, click opens a small explanation. */
+.term {
+  all: unset;
+  cursor: pointer;
+  text-decoration: underline dotted var(--color-brand);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  border-radius: 4px;
+  transition: color 0.2s var(--ease-brand);
+}
+.term:hover,
+.term[aria-expanded="true"] {
+  color: var(--color-brand);
+}
+.term:focus-visible {
+  outline: 2.5px solid var(--color-brand);
+  outline-offset: 2px;
+}
+.term-bubble {
+  position: absolute;
+  z-index: 60;
+  padding: 14px 16px 16px;
+  border-radius: 20px;
+  background: var(--color-g-900);
+  color: #fff;
+  animation: term-in 0.22s var(--ease-brand) both;
+}
+.term-bubble::before {
+  content: "";
+  position: absolute;
+  left: var(--arrow-left);
+  top: -5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--color-g-900);
+  transform: translateX(-50%) rotate(45deg);
+}
+.term-bubble[data-above]::before {
+  top: auto;
+  bottom: -5px;
+}
+@keyframes term-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .term-bubble {
+    animation: none;
+  }
+}
